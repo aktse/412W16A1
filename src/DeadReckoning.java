@@ -14,8 +14,8 @@ public class DeadReckoning {
 		      {-50, 80, 2}
 		    };
 	
-	EncoderMotor leftM = new NXTMotor (MotorPort.A);
-	EncoderMotor rightM = new NXTMotor (MotorPort.C);
+	EncoderMotor leftM;
+	EncoderMotor rightM;
 	
 	// Dimensions in cm
 	double wheelDiameter = 5.6;
@@ -34,7 +34,9 @@ public class DeadReckoning {
 	
 	public DeadReckoning() {}
 	
-	public void run() {
+	public void run(EncoderMotor left, EncoderMotor right) {
+		leftM = left; rightM = right;
+		
 		execute(commands[0]);
 		execute(commands[1]);
 		execute(commands[2]);

@@ -7,56 +7,58 @@ import lejos.robotics.EncoderMotor;
 import lejos.utility.Delay;
 public class BasicMovement {
 
-	static int aPower = 72;
-	static int cPower = 70;
-	static EncoderMotor motorA = new NXTMotor (MotorPort.A);
-	static EncoderMotor motorC = new NXTMotor (MotorPort.C);
+	int aPower = 72;
+	int cPower = 70;
+	EncoderMotor leftM;
+	EncoderMotor rightM;
 	
 	public BasicMovement() {}
 	
-	public static void run() {
-		motorA.setPower(aPower);
-		motorC.setPower(cPower);
+	public void run(EncoderMotor left, EncoderMotor right) {
+		leftM = left; rightM = right;
+		
+		leftM.setPower(aPower);
+		rightM.setPower(cPower);
 		moveSquare();
 		moveCircle(true);
 		moveEight();
 		Button.waitForAnyPress();
 	}
 	
-	public static void moveForward() {
-		motorA.forward();
-		motorC.forward();
+	public void moveForward() {
+		leftM.forward();
+		rightM.forward();
 		Delay.msDelay(2000);
-		motorA.stop();
-		motorC.stop();
+		leftM.stop();
+		rightM.stop();
 	}
 	
 	// Use left wheel to turn right (MotorA)
-	public static void turnRight(float degrees) {
-		int tcount = motorA.getTachoCount();
-		motorA.forward();
-		motorC.backward();
+	public void turnRight(float degrees) {
+		int tcount = leftM.getTachoCount();
+		leftM.forward();
+		rightM.backward();
 		
-		while(motorA.getTachoCount() <= 240 + tcount) {
+		while(leftM.getTachoCount() <= 240 + tcount) {
 			continue;
 		}
-		motorA.stop();
-		motorC.stop();
+		leftM.stop();
+		rightM.stop();
 	}
 	
 	// Use right wheel to turn left (MotorC)
-	public static void turnLeft(float degrees) {
-		int tcount = motorC.getTachoCount();
-		motorC.forward();
-		motorA.backward();
-		while(motorC.getTachoCount() <= 240 + tcount) {
+	public void turnLeft(float degrees) {
+		int tcount = rightM.getTachoCount();
+		rightM.forward();
+		leftM.backward();
+		while(rightM.getTachoCount() <= 240 + tcount) {
 			continue;
 		}
-		motorA.stop();
-		motorC.stop();
+		leftM.stop();
+		rightM.stop();
 	}
 	
-	public static void moveSquare() {
+	public void moveSquare() {
 		moveForward();
 		turnRight(90);
 		moveForward();
@@ -68,22 +70,22 @@ public class BasicMovement {
 	}
 	
 	// false for right true for left
-	public static void moveCircle(Boolean dir) {
+	public void moveCircle(Boolean dir) {
 		if (dir) {
-			motorC.setPower(cPower);
-			motorA.setPower(cPower-28);
+			rightM.setPower(cPower);
+			leftM.setPower(cPower-28);
 		} else {
-			motorA.setPower(aPower);
-			motorC.setPower(aPower-30);
+			leftM.setPower(aPower);
+			rightM.setPower(aPower-30);
 		}
-		motorA.forward();
-		motorC.forward();
+		leftM.forward();
+		rightM.forward();
 		Delay.msDelay(7500);
-		motorA.stop();
-		motorC.stop();
+		leftM.stop();
+		rightM.stop();
 	}
 	
-	public static void moveEight() {
+	public void moveEight() {
 		moveCircle(false);
 		moveCircle(true);
 	}
