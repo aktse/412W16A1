@@ -1,2 +1,3 @@
 .settings/
 *.jar
+.DS_Store

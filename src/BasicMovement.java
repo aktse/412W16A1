@@ -1,21 +1,20 @@
-/*
-*Version 0.8.1-beta
-*/
+// Q2k - Basic movement: circles, lines, figure eight
 
 import lejos.hardware.Button;
 import lejos.hardware.motor.NXTMotor;
 import lejos.hardware.port.MotorPort;
 import lejos.robotics.EncoderMotor;
 import lejos.utility.Delay;
-public class Q2 {
+public class BasicMovement {
 
 	static int aPower = 72;
 	static int cPower = 70;
 	static EncoderMotor motorA = new NXTMotor (MotorPort.A);
 	static EncoderMotor motorC = new NXTMotor (MotorPort.C);
 	
-	public static void main(String[] args) {
-		
+	public BasicMovement() {}
+	
+	public static void run() {
 		motorA.setPower(aPower);
 		motorC.setPower(cPower);
 		moveSquare();
